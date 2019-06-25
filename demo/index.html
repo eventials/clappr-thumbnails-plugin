@@ -1,0 +1,20 @@
+<head>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clappr@0.3/dist/clappr.min.js"></script>
+  <script type="text/javascript" src="../dist/clappr-thumbnails-plugin.js"></script>
+</head>
+<body>
+  <div id="player"></div>
+  <script>
+    var player = new Clappr.Player({
+    	source: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    	parentId: "#player",
+    	plugins: {
+        core: [ClapprThumbnailsPlugin],
+      },
+      scrubThumbnails: {
+        getThumbnailForTime: time => `https://vod-cdn.eventials.com/thumb/6bjevy2jnfu8owoq.json/thumb-${Math.round(time * 1000)}-w150-f1.jpg`
+      }
+    });
+
+  </script>
+</body>
