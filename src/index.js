@@ -47,7 +47,7 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
   }
 
   init() {
-    this._createElements()
+    this.createElements()
     this.renderPlugin()
   }
 
@@ -77,7 +77,7 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
   calculateHoverPosition(e) {
     const offset = e.pageX - this.core.mediaControl.$seekBarContainer.offset().left
     // proportion into the seek bar that the mouse is hovered over 0-1
-    this.overPosition = Math.min(1, Math.max(offset/this.core.mediaControl.$seekBarContainer.width(), 0))
+    this.hoverPosition = Math.min(1, Math.max(offset/this.core.mediaControl.$seekBarContainer.width(), 0))
   }
 
   buildImg(thumbUrl) {
@@ -86,7 +86,6 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
     // the container will contain the image positioned so that the correct sprite
     // is visible
     const $container = $("<div />").addClass("thumbnail-container")
-    $container.css("height", '150px')
     $container.append($img)
     return $container
   }
@@ -100,11 +99,12 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
     // the time into the video at the current hover position
     const startTimeOffset = this.core.mediaControl.container.getStartTimeOffset()
     const hoverTime = Math.floor((startTimeOffset + (videoDuration * hoverPosition)) / 5) * 5
-
     const elWidth = this.$el.width()
     const thumbWidth = $spotlight.width()
 
     const spotlightXPos = Math.max(Math.min((elWidth * hoverPosition) - (thumbWidth / 2), elWidth - thumbWidth), 0)
+    console.log(elWidth, hoverPosition, thumbWidth)
+    console.log(spotlightXPos)
 
     $spotlight.css("left", spotlightXPos)
     if (hoverTime === previousTime) return
@@ -136,8 +136,9 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
     }
   }
 
-  _createElements() {
+  createElements() {
     this.$el.html(this.template())
+    console.log(pluginStyle)
     this.$el.append(Styler.getStyleFor(pluginStyle))
 
     this.$spotlight = this.$el.find(".spotlight")
