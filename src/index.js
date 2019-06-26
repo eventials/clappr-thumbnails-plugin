@@ -52,10 +52,10 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
   }
 
   getOptions() {
-    if (!("scrubThumbnails" in this.core.options)) {
-      throw "'scrubThumbnails property missing from options object."
+    if (!("thumbnailPlugin" in this.core.options)) {
+      throw "'thumbnailPlugin' property missing from options object."
     }
-    return this.core.options.scrubThumbnails
+    return this.core.options.thumbnailPlugin
   }
 
   appendElToMediaControl() {
@@ -103,15 +103,13 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
     const thumbWidth = $spotlight.width()
 
     const spotlightXPos = Math.max(Math.min((elWidth * hoverPosition) - (thumbWidth / 2), elWidth - thumbWidth), 0)
-    console.log(elWidth, hoverPosition, thumbWidth)
-    console.log(spotlightXPos)
 
     $spotlight.css("left", spotlightXPos)
     if (hoverTime === previousTime) return
 
     this.previousTime = hoverTime
 
-    const thumbUrl = this.core.options.scrubThumbnails.getThumbnailForTime(hoverTime)
+    const thumbUrl = this.core.options.thumbnailPlugin.getThumbnailForTime(hoverTime)
 
     $spotlight.empty()
     $spotlight.append(this.buildImg(thumbUrl, this.getOptions().spotlightHeight))
@@ -138,7 +136,7 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
 
   createElements() {
     this.$el.html(this.template())
-    console.log(pluginStyle)
+
     this.$el.append(Styler.getStyleFor(pluginStyle))
 
     this.$spotlight = this.$el.find(".spotlight")
