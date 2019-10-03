@@ -90,6 +90,11 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
     return $container
   }
 
+  getRoundBase() {
+    const { roundBase } = this.getOptions()
+    return roundBase || 5
+  }
+
   // calculate how far along the carousel should currently be slid
   // depending on where the user is hovering on the progress bar
 
@@ -98,7 +103,8 @@ export default class ScrubThumbnailsPlugin extends UICorePlugin {
     const videoDuration = this.core.mediaControl.container.getDuration()
     // the time into the video at the current hover position
     const startTimeOffset = this.core.mediaControl.container.getStartTimeOffset()
-    const hoverTime = Math.floor((startTimeOffset + (videoDuration * hoverPosition)) / 5) * 5
+    const roundBase = this.getRoundBase()
+    const hoverTime = Math.floor((startTimeOffset + (videoDuration * hoverPosition)) / roundBase) * roundBase
     const elWidth = this.$el.width()
     const thumbWidth = $spotlight.width()
 

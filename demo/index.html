@@ -12,7 +12,8 @@
         core: [ClapprThumbnailsPlugin],
       },
       thumbnailPlugin: {
-        getThumbnailForTime: time => `https://vod-cdn.eventials.com/thumb/6bjevy2jnfu8owoq.json/thumb-${Math.round(time * 1000)}-w150-f1.jpg`
+        getThumbnailForTime: time => `https://vod-cdn.eventials.com/thumb/6bjevy2jnfu8owoq.json/thumb-${Math.round(time * 1000)}-w150-f1.jpg`,
+        roundBase: 10
       }
     });
 
